@@ -1,5 +1,6 @@
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import { Readable } from "stream"
+import { simpleParser } from "mailparser"
 
 export default async function getMessageFromS3(messageId: string): Promise<string | undefined> {
     const bucketName = process.env.EMAIL_S3_BUCKET
@@ -21,6 +22,14 @@ export default async function getMessageFromS3(messageId: string): Promise<strin
     const s3Object = await s3Client.send(getObjectCommand)
 
     const file = s3Object.Body && await streamToString(s3Object.Body as Readable)
+
+    if (!file) {
+        return
+    }
+
+    const parsed = await simpleParser(file)
+
+    console.log(parsed)
 
     return file
 }
