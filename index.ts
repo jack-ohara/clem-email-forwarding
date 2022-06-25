@@ -16,9 +16,7 @@ export async function handler(event: SESEvent) {
 
     const message = await constructMessage(emailFile)
 
-    console.log('Constructed message: ', message)
-
-    // await forwardMessage({ recipient: "jack@jackohara.io", sender: "test@johtest.link", body: message })
+    await forwardMessage(message)
 
     return {
         statusCode: 200
