@@ -1,4 +1,4 @@
-import { SendEmailCommand, SendEmailRequest, SendRawEmailCommandOutput, SES, SESClient } from "@aws-sdk/client-ses";
+import { SendRawEmailCommandOutput, SES } from "@aws-sdk/client-ses";
 
 export type Message = {
     sender: string;
@@ -10,11 +10,6 @@ export async function forwardMessage(message: Message) {
     const region = process.env.AWS_REGION
 
     const sesClient = new SES({ region: region })
-    const params = {
-        Source: message.sender,
-        Destination: { ToAddresses: [message.recipient] },
-        RawMessage: message.body
-    }
 
     let response: SendRawEmailCommandOutput | undefined = undefined
 

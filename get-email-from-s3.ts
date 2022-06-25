@@ -1,8 +1,7 @@
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import { Readable } from "stream"
-import { simpleParser } from "mailparser"
 
-export default async function getMessageFromS3(messageId: string): Promise<string | undefined> {
+export default async function getMessageFromS3(messageId: string): Promise<string> {
     const bucketName = process.env.EMAIL_S3_BUCKET
     const emailS3Prefix = process.env.EMAIL_S3_PREFIX
     const region = process.env.AWS_REGION
@@ -24,12 +23,8 @@ export default async function getMessageFromS3(messageId: string): Promise<strin
     const file = s3Object.Body && await streamToString(s3Object.Body as Readable)
 
     if (!file) {
-        return
+        throw new Error("No email found in S3")
     }
-
-    const parsed = await simpleParser(file)
-
-    console.log(parsed)
 
     return file
 }
