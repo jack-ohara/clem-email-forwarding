@@ -10,18 +10,14 @@ export default async function getMessageFromS3(messageId: string): Promise<strin
         throw new Error("No bucket name found")
     }
 
-    if (emailS3Prefix === undefined) {
-        throw new Error("No S3 prefix found")
-    }
-
     if (!region) {
         throw new Error("No AWS region found")
     }
 
-    const objectPath = emailS3Prefix ? `${emailS3Prefix}/${messageId}` : messageId
+    const key = emailS3Prefix ? `${emailS3Prefix}/${messageId}` : messageId
 
     const s3Client = new S3Client({ region: region })
-    const getObjectCommand = new GetObjectCommand({ Bucket: bucketName, Key: messageId })
+    const getObjectCommand = new GetObjectCommand({ Bucket: bucketName, Key: key })
     const s3Object = await s3Client.send(getObjectCommand)
 
     const file = s3Object.Body && await streamToString(s3Object.Body as Readable)
