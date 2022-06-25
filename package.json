@@ -1,0 +1,28 @@
+{
+  "name": "clem-email-forwarding",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jack-ohara/clem-email-forwarding.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jack-ohara/clem-email-forwarding/issues"
+  },
+  "homepage": "https://github.com/jack-ohara/clem-email-forwarding#readme",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.101",
+    "@types/node": "^18.0.0",
+    "@vercel/ncc": "^0.34.0"
+  }
+}
