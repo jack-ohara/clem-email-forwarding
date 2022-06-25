@@ -1,9 +1,14 @@
 import { SESEvent } from "aws-lambda";
+import getMessageFromS3 from "./get-email-from-s3";
 
-export function handler(event: SESEvent) {
+export async function handler(event: SESEvent) {
     console.log(JSON.stringify(event))
 
-    console.log(event.Records[0].ses)
+    const messageId = event.Records[0].ses.mail.messageId
+
+    const message = await getMessageFromS3(messageId)
+
+    console.log(message)
 
     return {
         statusCode: 200
